@@ -10,17 +10,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 const content = this.value.trim();
                 if (content) {
                     const bucketId = window.location.pathname.split('/').pop();
+                    const isHomePage = window.location.pathname === '/';
                     fetch('/add_note', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: `content=${encodeURIComponent(content)}&bucket_id=${bucketId}`
+                        body: `content=${encodeURIComponent(content)}${isHomePage ? '' : `&bucket_id=${bucketId}`}`
                     })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            location.reload();
+                            if (isHomePage) {
+                                this.value = '• ';
+                            } else {
+                                location.reload();
+                            }
                         }
                     });
                 }

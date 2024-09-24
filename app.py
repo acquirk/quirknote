@@ -20,6 +20,14 @@ class Note(db.Model):
     content = db.Column(db.Text, nullable=False)
     bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id'), nullable=False)
 
+def get_or_create_inbox():
+    inbox = Bucket.query.filter_by(name="Inbox").first()
+    if not inbox:
+        inbox = Bucket(name="Inbox")
+        db.session.add(inbox)
+        db.session.commit()
+    return inbox
+
 @app.route('/')
 def index():
     buckets = Bucket.query.all()
@@ -28,7 +36,12 @@ def index():
 @app.route('/add_note', methods=['POST'])
 def add_note():
     content = request.form['content']
-    bucket_id = request.form['bucket_id']
+    bucket_id = request.form.get('bucket_id')
+    
+    if not bucket_id:
+        inbox = get_or_create_inbox()
+        bucket_id = inbox.id
+    
     new_note = Note(content=content, bucket_id=bucket_id)
     db.session.add(new_note)
     db.session.commit()
@@ -60,6 +73,7 @@ with app.app_context():
     # Add some initial data if the database is empty
     if not Bucket.query.first():
         initial_buckets = [
+            Bucket(name="Inbox"),
             Bucket(name="Home"),
             Bucket(name="Work"),
             Bucket(name="Personal")
