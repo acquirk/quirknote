@@ -90,8 +90,18 @@ body {
     border: none;
     resize: none;
     font-size: 16px;
-    padding: 20px;
+    padding: 20px 20px 20px 40px; /* Increased left padding */
     position: relative;
+}
+
+#new-note::before {
+    content: '•';
+    position: absolute;
+    left: 20px;
+    top: 18px; /* Adjust as needed to align with text */
+    font-size: 32px; /* Twice the size of the text */
+    line-height: 1;
+    pointer-events: none;
 }
 
 #back-button {
