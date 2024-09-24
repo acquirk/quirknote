@@ -82,6 +82,8 @@ body {
     content: '•';
     position: absolute;
     left: 0;
+    height: 24px;
+    font-size: 24px;
 }
 
 #new-note {
@@ -95,9 +97,6 @@ body {
     line-height: 1.5;
 }
 
-#new-note::first-line {
-    font-size: 24px; /* Larger font size for the first line (bullet point) */
-}
 
 #back-button {
     position: fixed;
