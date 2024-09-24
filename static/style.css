@@ -90,18 +90,13 @@ body {
     border: none;
     resize: none;
     font-size: 16px;
-    padding: 20px 20px 20px 40px; /* Increased left padding */
+    padding: 20px;
     position: relative;
+    line-height: 1.5;
 }
 
-#new-note::before {
-    content: '•';
-    position: absolute;
-    left: 20px;
-    top: 18px; /* Adjust as needed to align with text */
-    font-size: 32px; /* Twice the size of the text */
-    line-height: 1;
-    pointer-events: none;
+#new-note::first-line {
+    font-size: 24px; /* Larger font size for the first line (bullet point) */
 }
 
 #back-button {

@@ -4,19 +4,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const addBucket = document.getElementById('add-bucket');
 
     if (newNote) {
-        newNote.value = ' '; // Initialize with just a space
+        newNote.value = '• '; // Initialize with bullet point and space
         
         newNote.addEventListener('focus', function() {
             if (this.value.trim() === '') {
-                this.value = ' '; // Add a space
+                this.value = '• '; // Add bullet point and space
             }
         });
 
         newNote.addEventListener('input', function() {
             if (this.value.trim() === '') {
-                this.value = ' '; // Ensure there's always a space
-            } else if (this.value[0] !== ' ') {
-                this.value = ' ' + this.value; // Add space if it's not there
+                this.value = '• '; // Ensure there's always a bullet point and space
+            } else if (!this.value.startsWith('• ')) {
+                this.value = '• ' + this.value.trimStart(); // Add bullet point if it's not there
             }
         });
 
