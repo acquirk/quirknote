@@ -4,6 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const addBucket = document.getElementById('add-bucket');
 
     if (newNote) {
+        newNote.value = ''; // Clear any initial value
+        
+        newNote.addEventListener('focus', function() {
+            if (this.value === '') {
+                this.value = ' '; // Add a space to keep the bullet visible
+            }
+        });
+
+        newNote.addEventListener('input', function() {
+            if (this.value === '') {
+                this.value = ' '; // Ensure there's always at least a space
+            }
+        });
+
         newNote.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -11,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (content) {
                     const bucketId = window.location.pathname.split('/').pop();
                     const isHomePage = window.location.pathname === '/';
-                    // Remove the bullet point and any leading space before sending
-                    const cleanContent = content.replace(/^[•\s]+/, '');
+                    // Remove any leading space before sending
+                    const cleanContent = content.replace(/^\s+/, '');
                     fetch('/add_note', {
                         method: 'POST',
                         headers: {
@@ -24,14 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(data => {
                         if (data.success) {
                             if (isHomePage) {
-                                this.value = '• ';
+                                this.value = ' ';
                             } else {
                                 location.reload();
                             }
                         }
                     });
                 }
-                this.value = '• ';
+                this.value = ' ';
             }
         });
     }
