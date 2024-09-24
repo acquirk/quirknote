@@ -52,3 +52,17 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+# Ensure tables are created
+with app.app_context():
+    db.create_all()
+    
+    # Add some initial data if the database is empty
+    if not Bucket.query.first():
+        initial_buckets = [
+            Bucket(name="Home"),
+            Bucket(name="Work"),
+            Bucket(name="Personal")
+        ]
+        db.session.add_all(initial_buckets)
+        db.session.commit()
