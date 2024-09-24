@@ -28,11 +28,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (x < 20 && y < 20) { // Check if click is in the top-left corner
                 isTodo = !isTodo;
-                if (this.value.startsWith('• ')) {
-                    this.value = '☐ ' + this.value.slice(2);
-                } else if (this.value.startsWith('☐ ')) {
-                    this.value = '• ' + this.value.slice(2);
-                }
+                const currentContent = this.value.slice(2); // Remove the first two characters (bullet or checkbox)
+                this.value = (isTodo ? '☐ ' : '• ') + currentContent;
+                
+                // Move cursor to the end of the text
+                this.selectionStart = this.selectionEnd = this.value.length;
+                
+                // Prevent default behavior to avoid text selection
+                e.preventDefault();
             }
         });
 
