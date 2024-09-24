@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (content) {
                     const bucketId = window.location.pathname.split('/').pop();
                     const isHomePage = window.location.pathname === '/';
+                    // Remove the bullet point and any leading space before sending
+                    const cleanContent = content.replace(/^[•\s]+/, '');
                     fetch('/add_note', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: `content=${encodeURIComponent(content)}${isHomePage ? '' : `&bucket_id=${bucketId}`}`
+                        body: `content=${encodeURIComponent(cleanContent)}${isHomePage ? '' : `&bucket_id=${bucketId}`}`
                     })
                     .then(response => response.json())
                     .then(data => {
