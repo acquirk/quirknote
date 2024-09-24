@@ -10,8 +10,8 @@
     <h1>{{ bucket.name }}</h1>
     <div id="notes">
         {% for note in notes %}
-            <div class="note">
-                <p>{{ note.content }}</p>
+            <div class="note {% if note.is_todo %}todo{% endif %}">
+                <p>{% if note.is_todo %}☐ {% else %}• {% endif %}{{ note.content }}</p>
             </div>
         {% endfor %}
     </div>

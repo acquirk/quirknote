@@ -19,6 +19,7 @@ class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id'), nullable=False)
+    is_todo = db.Column(db.Boolean, default=False)
 
 def get_or_create_inbox():
     inbox = Bucket.query.filter_by(name="Inbox").first()
@@ -36,13 +37,14 @@ def index():
 @app.route('/add_note', methods=['POST'])
 def add_note():
     content = request.form['content']
+    is_todo = request.form.get('is_todo') == 'true'
     bucket_id = request.form.get('bucket_id')
     
     if not bucket_id:
         inbox = get_or_create_inbox()
         bucket_id = inbox.id
     
-    new_note = Note(content=content, bucket_id=bucket_id)
+    new_note = Note(content=content, bucket_id=bucket_id, is_todo=is_todo)
     db.session.add(new_note)
     db.session.commit()
     return jsonify({'success': True})

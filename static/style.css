@@ -79,11 +79,18 @@ body {
 }
 
 .note p::before {
-    content: '•';
     position: absolute;
     left: 0;
     height: 24px;
     font-size: 24px;
+}
+
+.note:not(.todo) p::before {
+    content: '•';
+}
+
+.note.todo p::before {
+    content: '☐';
 }
 
 #new-note {
