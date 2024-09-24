@@ -22,6 +22,7 @@ class Note(db.Model):
     content = db.Column(db.Text, nullable=False)
     bucket_id = db.Column(db.Integer, db.ForeignKey('bucket.id'), nullable=False)
     is_todo = db.Column(db.Boolean, default=False)
+    completed = db.Column(db.Boolean, default=False)
 
 def get_or_create_inbox():
     inbox = Bucket.query.filter_by(name="Inbox").first()
@@ -64,6 +65,17 @@ def bucket_notes(bucket_id):
     bucket = Bucket.query.get_or_404(bucket_id)
     notes = Note.query.filter_by(bucket_id=bucket_id).all()
     return render_template('bucket.html', bucket=bucket, notes=notes)
+
+@app.route('/update_note_status', methods=['POST'])
+def update_note_status():
+    note_id = request.form.get('note_id')
+    completed = request.form.get('completed') == 'true'
+    
+    note = Note.query.get_or_404(note_id)
+    note.completed = completed
+    db.session.commit()
+    
+    return jsonify({'success': True})
 
 if __name__ == '__main__':
     with app.app_context():

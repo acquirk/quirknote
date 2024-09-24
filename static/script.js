@@ -98,4 +98,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Add event listener for todo checkboxes
+    document.addEventListener('change', function(e) {
+        if (e.target && e.target.classList.contains('todo-checkbox')) {
+            const noteId = e.target.closest('.note').dataset.id;
+            const completed = e.target.checked;
+
+            fetch('/update_note_status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `note_id=${noteId}&completed=${completed}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    // Revert the checkbox if the update failed
+                    e.target.checked = !completed;
+                }
+            });
+        }
+    });
 });

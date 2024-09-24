@@ -10,8 +10,15 @@
     <h1>{{ bucket.name }}</h1>
     <div id="notes">
         {% for note in notes %}
-            <div class="note {% if note.is_todo %}todo{% endif %}">
-                <p>{% if note.is_todo %}☐ {% else %}• {% endif %}{{ note.content }}</p>
+            <div class="note {% if note.is_todo %}todo{% endif %}" data-id="{{ note.id }}">
+                <p>
+                    {% if note.is_todo %}
+                    <input type="checkbox" class="todo-checkbox" {% if note.completed %}checked{% endif %}>
+                    {% else %}
+                    •
+                    {% endif %}
+                    {{ note.content }}
+                </p>
             </div>
         {% endfor %}
     </div>
