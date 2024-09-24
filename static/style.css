@@ -1,0 +1,60 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#note-input {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+#new-note {
+    width: 100%;
+    height: 100%;
+    border: none;
+    resize: none;
+    font-size: 16px;
+}
+
+#buckets {
+    flex: 2;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.bucket {
+    width: calc(33.33% - 20px);
+    height: 100px;
+    margin: 10px;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#add-bucket {
+    width: calc(33.33% - 20px);
+    height: 100px;
+    margin: 10px;
+    background-color: #d0d0d0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#search-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}

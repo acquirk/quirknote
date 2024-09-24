@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuirkNote</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="note-input">
+        <textarea id="new-note" placeholder="• Type your note here..."></textarea>
+    </div>
+    <div id="buckets">
+        {% for bucket in buckets %}
+            <div class="bucket" data-id="{{ bucket.id }}">
+                <h3>{{ bucket.name }}</h3>
+            </div>
+        {% endfor %}
+        <div id="add-bucket">+</div>
+    </div>
+    <div id="search-icon">🔍</div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
